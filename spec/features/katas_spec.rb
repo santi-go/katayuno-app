@@ -44,6 +44,14 @@ describe 'Kata' do
     expect(page).to have_content(kata_description)
   end
 
+  it 'can be deleted' do
+    kata = create_kata
+    visit root_path
+    click_on('Delete')
+
+    expect(page).not_to have_content(kata.title)
+  end
+
   def create_kata(title: 'Kata title', description: 'Kata description')
     kata = Kata.new(title: title, description: description)
     kata.save
