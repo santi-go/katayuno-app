@@ -2,6 +2,11 @@ require 'rails_helper'
 require 'capybara'
 
 describe 'Kata' do
+
+  before(:each) do
+    log_in
+  end
+
   it 'can be read' do
     second_title = 'second title'
     second_description = 'second description'
@@ -57,6 +62,17 @@ describe 'Kata' do
     kata.save
 
     kata
+  end
+
+  def log_in
+    user = User.new(email: 'admin@test.com', password: 'qwerty')
+    user.save
+
+    visit '/users/sign_in'
+    fill_in(:user_email, with: user.email)
+    fill_in(:user_password, with: user.password)
+    click_on('Log in')
+
   end
 
 
